@@ -6,14 +6,15 @@ Setup Steps
 3. Run backend/src/db/schema.sql to create tables
 4. Run backend/src/db/seed.js to create a test user
 5. Create a .env file in /backend with:
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=document_db
-   DB_USER=postgres
-   DB_PASSWORD=your_password
-   JWT_SECRET=your_secret
-6. cd backend && npm install && npm run dev
-7. cd frontend && npm install && npm run dev
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=document_db
+DB_USER=postgres
+DB_PASSWORD=your_password
+JWT_SECRET=your_secret
+6. Replace the DB_password with your local postgres password and set JWT_SECRET to a random string.
+7. cd backend && npm install && npm run dev
+8. cd frontend && npm install && npm run dev
 
 Login credentials:
 Username: johnny
