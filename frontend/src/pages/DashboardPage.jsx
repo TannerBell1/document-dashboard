@@ -12,6 +12,8 @@ export default function DashboardPage() {
     const [uploadedData, setUploadedData] = useState([])
     const [processedData, setProcessedData] = useState([])
     const [statusFilter, setStatusFilter] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     const [file, setFile] = useState(null)
     const [uploading, setUploading] = useState(false)
     const navigate = useNavigate()
@@ -46,7 +48,12 @@ export default function DashboardPage() {
         navigate('/login')
     }
 
-    const filtered = statusFilter ? documents.filter(d => d.status === statusFilter) : documents
+    const filtered = documents.filter(doc => {
+        const matchesStatus = statusFilter ? doc.status === statusFilter : true
+        const matchesStart = startDate ? new Date(doc.created_at) >= new Date(startDate) : true
+        const matchesEnd = endDate ? new Date(doc.created_at) <= new Date(endDate) : true
+        return matchesStatus && matchesStart && matchesEnd
+    })
 
     return (
         <div style={styles.page}>
@@ -139,7 +146,13 @@ export default function DashboardPage() {
                         <option value="processing">Processing</option>
                         <option value="completed">Completed</option>
                         <option value="failed">Failed</option>
-                    </select>
+                     </select>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '14px', color: '#666' }}>From</span>
+                            <input type="date" style={styles.select} onChange={e => setStartDate(e.target.value)} />
+                            <span style={{ fontSize: '14px', color: '#666' }}>To</span>
+                            <input type="date" style={styles.select} onChange={e => setEndDate(e.target.value)} />
+                        </div>
                     <input
                         type="file"
                         id="fileInput"
@@ -242,7 +255,7 @@ const styles = {
         cursor: 'pointer',
         fontWeight: '600',
     },
-    filterRow: { marginBottom: '16px' },
+    filterRow: { marginBottom: '16px', display: 'flex', gap: '12px' },
     select: {
         padding: '8px 12px',
         borderRadius: '8px',
